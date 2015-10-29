@@ -1,18 +1,21 @@
-FILES = Array.new
-Dir[File.join(__dir__, 'FileGenerators', '*.rb')].each do |file|
-  load file
-  class_name = File.basename(file, '.rb')
-  klass = Object.const_get(class_name)
-  FILES << class_name if (klass.methods(false) + klass.instance_methods - Object.methods - Object.instance_methods).include?(:write_to_file)
-end
-
 at_exit {puts "Bye-Bye! See you again"}
 
 class FileFormatLister
   @@actions = [(lambda { exit })]
+
+  def self.get_format_files
+    @@files = Array.new
+    Dir[File.join(__dir__, 'FileGenerators', '*.rb')].each do |file|
+      load file
+      class_name = File.basename(file, '.rb')
+      klass = Object.const_get(class_name)
+      @@files << class_name if (klass.methods(false) + klass.instance_methods - Object.methods - Object.instance_methods).include?(:write_to_file)
+    end
+  end
+
   def self.get_valid_formats
     @@valid_formats = Array.new
-    FILES.each do |format|
+    @@files.each do |format|
       format.match(/Gen/) {|m| @@valid_formats << m.pre_match}
     end
   end

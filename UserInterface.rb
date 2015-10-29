@@ -11,7 +11,7 @@ INTRO
     @info = Hash.new
   end
 
-  def intro
+  def display_intro
     puts @intro_string
   end
 
@@ -23,6 +23,7 @@ INTRO
   end
 
   def write_to_file
+    FileFormatLister.get_format_files
     FileFormatLister.list_formats
     FileFormatLister.output_file(@info)
   end
