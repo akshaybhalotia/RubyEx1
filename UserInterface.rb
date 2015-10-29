@@ -1,6 +1,6 @@
 require_relative 'FileFormatLister'
 
-class UserInteractor
+class UserInterface
   def initialize
     @intro_string = <<INTRO
 Hi, welcome to the Resume Generator.
@@ -24,6 +24,6 @@ INTRO
 
   def write_to_file
     FileFormatLister.list_formats
-    FileFormatLister.make_the_file_work(@info)
+    FileFormatLister.output_file(@info)
   end
 end
