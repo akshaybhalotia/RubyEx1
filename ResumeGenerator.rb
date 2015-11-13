@@ -2,9 +2,12 @@ require_relative 'UserInterface'
 
 fields = [:Name, :Age, :Education, :"College/University", :"Years of experience", :"Last Company"]
 
-resume_generator = UserInterface.new
-resume_generator.display_intro
-resume_generator.read_data(fields)
-resume_generator.show_formats
-resume_generator.get_choice
-resume_generator.write_to_file
+user_interface = UserInterface.new
+file_formatter = FileFormatLister.new
+user_interface.display_intro
+user_interface.read_data(fields)
+format_list = file_formatter.get_format_files
+user_interface.show_formats(format_list)
+user_interface.get_choice
+path = file_formatter.output_file(user_interface.info, user_interface.choice)
+user_interface.show(path)

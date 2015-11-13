@@ -6,7 +6,7 @@ class FileFormatLister
 
   def get_format_files
     find_format_files
-    @files.map {|format| format::FILE_TYPE.upcase}
+    @formats = @files.map {|format| format::FILE_TYPE.upcase}
   end
 
   def find_format_files
@@ -32,5 +32,6 @@ class FileFormatLister
   def output_file(info_hash, choice)
     define_actions
     @actions[choice].call(info_hash)
+    return "Written successfully to file: #{File.join(__dir__, 'Resume')}.#{@formats[choice-1].downcase}"
   end
 end
